@@ -11,6 +11,7 @@ import {
 } from '../../types/studentTypes';
 import { StudentContext } from './context';
 import { CustomAbortController } from '../types';
+import { OrderDirection } from '../../types/types';
 
 export const StudentProvider = ({ children }: { children: ReactNode }) => {
   const axiosToken = useAddAccToken(axiosStud);
@@ -24,7 +25,9 @@ export const StudentProvider = ({ children }: { children: ReactNode }) => {
   const getAllStudents = async (
     isMounted: boolean,
     controller: CustomAbortController,
-    take: string
+    take: string,
+    orderBy: string,
+    orderDirection: OrderDirection
   ) => {
     try {
       const response = await axiosToken.get('', {
@@ -32,6 +35,8 @@ export const StudentProvider = ({ children }: { children: ReactNode }) => {
         params: {
           skip: students.length,
           take: take,
+          orderBy,
+          orderDirection,
         },
       });
       isMounted &&
@@ -52,9 +57,12 @@ export const StudentProvider = ({ children }: { children: ReactNode }) => {
 
   const addStudent = async ({ name, email }: AddStudent) => {
     try {
-      await axiosToken.post('', {
+      const newStud = await axiosToken.post('', {
         name: name,
         email: email,
+      });
+      setStudents((prev) => {
+        return [...prev, newStud.data];
       });
       setSuccessMsg(`New student ${name} added!`);
     } catch (error) {

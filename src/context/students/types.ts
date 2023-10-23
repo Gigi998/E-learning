@@ -5,6 +5,7 @@ import {
   UpdateStudentType,
 } from '../../types/studentTypes';
 import { CustomAbortController } from '../types';
+import { OrderDirection } from '../../types/types';
 
 export type StudentContext = {
   students: StudentType[];
@@ -12,7 +13,13 @@ export type StudentContext = {
   successMsg: string;
   singleStud: StudentType | undefined;
   isUpdate: boolean;
-  getAllStudents: (isMounted: boolean, controller: CustomAbortController, take: string) => void;
+  getAllStudents: (
+    isMounted: boolean,
+    controller: CustomAbortController,
+    take: string,
+    orderBy: string,
+    orderDirection: OrderDirection
+  ) => void;
   addStudent: ({ name, email }: AddStudent) => void;
   setErrorMsg: React.Dispatch<React.SetStateAction<string>>;
   setSuccessMsg: React.Dispatch<React.SetStateAction<string>>;

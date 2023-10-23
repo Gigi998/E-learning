@@ -16,4 +16,9 @@ export enum Roles {
   STUDENT = 'STUDENT',
 }
 
+export enum OrderDirection {
+  ASC = 'asc',
+  DESC = 'desc',
+}
+
 export const DEFAULT_BOOKS_TAKE = '6';
